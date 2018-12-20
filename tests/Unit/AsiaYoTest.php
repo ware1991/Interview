@@ -40,6 +40,20 @@ class AsiaYoTest extends TestCase
     }
 
     /**
+     * 請使用你/妳擅長的語言實作一個 numeric format string function，依照每三位數標出逗號。
+     * Third case format negative numeric and float point numeric
+     * e.g.
+     * f(-123.45) => “-123.45”。
+     *
+     * @test
+     * @group AsiaYoTest
+     */
+    public function assertNegativeAndFloatNumeric()
+    {
+        $this->assertEquals("-123.45", $this->numericFormat("-123.45"));
+    }
+
+    /**
      * Format a numeric with grouped thousands
      *
      * @param string $numeric The numeric being formatted.
@@ -48,6 +62,11 @@ class AsiaYoTest extends TestCase
      */
     private function numericFormat(string $numeric)
     {
-        return number_format($numeric);
+        $decimals = 0;
+        if (preg_match("/\./i", $numeric)) {
+            $decimals = strlen(explode(".", $numeric)[1]);
+        }
+
+        return number_format($numeric, $decimals);
     }
 }
