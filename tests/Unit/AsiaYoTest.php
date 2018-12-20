@@ -26,6 +26,20 @@ class AsiaYoTest extends TestCase
     }
 
     /**
+     * 請使用你/妳擅長的語言實作一個 numeric format string function，依照每三位數標出逗號。
+     * Second case format million numeric
+     * e.g.
+     * f(3345678) => “3,345,678”
+     *
+     * @test
+     * @group AsiaYoTest
+     */
+    public function assertMillionsNumeric()
+    {
+        $this->assertEquals("3,345,678", $this->numericFormat("3345678"));
+    }
+
+    /**
      * Format a numeric with grouped thousands
      *
      * @param string $numeric The numeric being formatted.
