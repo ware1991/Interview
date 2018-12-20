@@ -69,4 +69,46 @@ class AsiaYoTest extends TestCase
 
         return number_format($numeric, $decimals);
     }
+
+    /**
+     * 請使用你/妳擅長的語言實作一個 next numeric function，給定一個整數，以同樣的數字組合找出下一個大於此整數的數字。
+     * First case: Find next permutation greater numeric.
+     * e.g.
+     * f(123) => 132
+     *
+     * @test
+     * @group AsiaYoTest
+     */
+    public function assertNextPermutationGreaterNumeric()
+    {
+        $this->assertEquals("132", $this->nextGreaterNumeric("123"));
+    }
+
+    /**
+     * Reorganize numeric and find next permutation greater numeric.
+     *
+     * @param string $numeric The numeric being reorganized.
+     *
+     * @return string Next greater numeric.
+     */
+    private function nextGreaterNumeric(string $numeric)
+    {
+        $numericSplitArray = str_split($numeric, 1);
+        $baseKey = count($numericSplitArray) - 2;
+
+        while ($baseKey >= 0 && $numericSplitArray[$baseKey + 1] <= $numericSplitArray[$baseKey]) {
+            $baseKey--;
+        }
+
+        $swapKey = count($numericSplitArray) - 1;
+        while ($swapKey > $baseKey && $numericSplitArray[$swapKey] <= $numericSplitArray[$baseKey]) {
+            $swapKey--;
+        }
+
+        $temporaryVale = $numericSplitArray[$baseKey];
+        $numericSplitArray[$baseKey] = $numericSplitArray[$swapKey];
+        $numericSplitArray[$swapKey] = $temporaryVale;
+
+        return implode($numericSplitArray);
+    }
 }
