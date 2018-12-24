@@ -85,17 +85,35 @@ class AsiaYoTest extends TestCase
     }
 
     /**
+     * 請使用你/妳擅長的語言實作一個 next numeric function，給定一個整數，以同樣的數字組合找出下一個大於此整數的數字。
+     * Second case: Find next permutation greater numeric has the same number.
+     * e.g.
+     * f(5566) => 5656
+     * -
+     * 解題思維：1. 第一個案列交換後的數列，若是出現位數較多的數列，會出現交換後的數列並非下一個最大
+     *          2. 被交換後的數列，從 $baseKey 往右開始的數列可能為降冪排列的數列
+     *          3. 將 $baseKey 往右開始的降冪數列，反轉一次即可為升冪排列的數列
+     *
+     * @test
+     * @group AsiaYoTest
+     */
+    public function assertNextPermutationGreaterNumericHasSameNumber()
+    {
+        $this->assertEquals("5656", $this->nextGreaterNumeric("5566"));
+    }
+
+    /**
      * Reorganize numeric and find next permutation greater numeric.
      *
      * @param string $numeric The numeric being reorganized.
      *
      * @return string Next greater numeric.
      */
-    private function nextGreaterNumeric(string $numeric)
+    private function nextGreaterNumeric(string $numeric): string
     {
         $numericSplitArray = str_split($numeric, 1);
-        $baseKey = count($numericSplitArray) - 2;
 
+        $baseKey = count($numericSplitArray) - 2;
         while ($baseKey >= 0 && $numericSplitArray[$baseKey + 1] <= $numericSplitArray[$baseKey]) {
             $baseKey--;
         }
@@ -105,10 +123,49 @@ class AsiaYoTest extends TestCase
             $swapKey--;
         }
 
-        $temporaryVale = $numericSplitArray[$baseKey];
-        $numericSplitArray[$baseKey] = $numericSplitArray[$swapKey];
-        $numericSplitArray[$swapKey] = $temporaryVale;
+        $numericSplitArray = $this->swapNumeric($numericSplitArray, $baseKey, $swapKey);
+
+        $numericSplitArray = $this->reverseNumeric($numericSplitArray, $baseKey + 1);
 
         return implode($numericSplitArray);
+    }
+
+    /**
+     * Swap the array value by key.
+     *
+     * @param array $numericArray The numeric array being swapped.
+     * @param int   $baseKey      This key will be swapped by $swapKey.
+     * @param int   $swapKey      This key for swapped.
+     *
+     * @return array A swapped version of numeric array.
+     */
+    private function swapNumeric(Array $numericArray, int $baseKey, int $swapKey): array
+    {
+        $temporaryVale = $numericArray[$baseKey];
+        $numericArray[$baseKey] = $numericArray[$swapKey];
+        $numericArray[$swapKey] = $temporaryVale;
+
+        return $numericArray;
+    }
+
+    /**
+     * Reverse the array value from $startKey.
+     *
+     * @param array $numericArray The numeric array being reversed.
+     * @param int   $startKey     This key is the reverse base key.
+     *
+     * @return array A reverse version of numeric array.
+     */
+    private function reverseNumeric(Array $numericArray, int $startKey): array
+    {
+        $swapKey = count($numericArray) - 1;
+        while ($startKey < $swapKey && $numericArray[$startKey] >= $numericArray[$swapKey]) {
+            $numericArray = $this->swapNumeric($numericArray, $startKey, $swapKey);
+
+            $startKey++;
+            $swapKey--;
+        }
+
+        return $numericArray;
     }
 }
