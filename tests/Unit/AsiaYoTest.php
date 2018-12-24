@@ -71,6 +71,49 @@ class AsiaYoTest extends TestCase
     }
 
     /**
+     * 請使用你/妳擅長的語言實作一個 pipe function。
+     * 此 function 參數為不定長度，第一個參數為任意型態的變數，之後的參數則是 function pointer。
+     * First case: Call function once.
+     * e.g.
+     * def increment (int value) {
+     *      return value + 1
+     * }
+     * pipe(5, increment) => 6
+     *
+     * @test
+     * @group AsiaYoTest
+     */
+    public function assertCallFunctionOnce()
+    {
+        $this->assertEquals(6, $this->pipe("5", "increment"));
+    }
+
+    /**
+     * Increment value.
+     *
+     * @param int $value This value being increased.
+     *
+     * @return mixed A increased value.
+     */
+    private function increment(int $value)
+    {
+        return $value + 1;
+    }
+
+    /**
+     * Call function given by the parameter.
+     *
+     * @param mixed  $value        The value to be gave.
+     * @param string $functionName The function to be called.
+     *
+     * @return mixed The function result.
+     */
+    private function pipe($value, string $functionName)
+    {
+        return $this->$functionName($value);
+    }
+
+    /**
      * 請使用你/妳擅長的語言實作一個 next numeric function，給定一個整數，以同樣的數字組合找出下一個大於此整數的數字。
      * First case: Find next permutation greater numeric.
      * e.g.
