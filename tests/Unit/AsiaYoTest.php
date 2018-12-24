@@ -60,7 +60,7 @@ class AsiaYoTest extends TestCase
      *
      * @return string A formatted version of numeric.
      */
-    private function numericFormat(string $numeric)
+    private function numericFormat(string $numeric): string
     {
         $decimals = 0;
         if (preg_match("/\./i", $numeric)) {
