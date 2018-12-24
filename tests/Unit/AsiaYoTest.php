@@ -75,6 +75,9 @@ class AsiaYoTest extends TestCase
      * First case: Find next permutation greater numeric.
      * e.g.
      * f(123) => 132
+     * -
+     * 解題思維：1. 從右至左，找到左邊數字大於右邊數字的鍵位
+     *          2. 再從右邊比對一次，將數字大於第一次比對出來的數字做交換
      *
      * @test
      * @group AsiaYoTest
