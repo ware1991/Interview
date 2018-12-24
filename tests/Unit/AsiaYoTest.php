@@ -89,6 +89,24 @@ class AsiaYoTest extends TestCase
     }
 
     /**
+     * 請使用你/妳擅長的語言實作一個 pipe function。
+     * 此 function 參數為不定長度，第一個參數為任意型態的變數，之後的參數則是 function pointer。
+     * Second case: Call function several times.
+     * e.g.
+     * def increment (int value) {
+     *      return value + 1
+     * }
+     * pipe(5, increment, increment, increment) => 8
+     *
+     * @test
+     * @group AsiaYoTest
+     */
+    public function assertCallFunctionSeveralTimes()
+    {
+        $this->assertEquals("8", $this->pipe("5", "increment", "increment", "increment"));
+    }
+
+    /**
      * Increment value.
      *
      * @param int $value This value being increased.
@@ -103,14 +121,18 @@ class AsiaYoTest extends TestCase
     /**
      * Call function given by the parameter.
      *
-     * @param mixed  $value        The value to be gave.
-     * @param string $functionName The function to be called.
+     * @param mixed $value        The value to be gave.
+     * @param array $functionName The function to be called.
      *
      * @return mixed The function result.
      */
-    private function pipe($value, string $functionName)
+    private function pipe($value, ...$functionName)
     {
-        return $this->$functionName($value);
+        foreach ($functionName as $function) {
+            $value = $this->$function($value);
+        }
+
+        return $value;
     }
 
     /**
