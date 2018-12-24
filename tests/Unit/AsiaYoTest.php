@@ -106,6 +106,25 @@ class AsiaYoTest extends TestCase
     }
 
     /**
+     * 請使用你/妳擅長的語言實作一個 next numeric function，給定一個整數，以同樣的數字組合找出下一個大於此整數的數字。
+     * Third case: Find next permutation greater negative numeric.
+     * e.g.
+     * f(-3310) => f(-3301)
+     * -
+     * 解題思維：1. 負數為數值越小數列越大，與正數邏輯相反
+     *          2. 從右至左，找到左邊數字小於右邊數字的鍵位
+     *          3. 再從右邊比對一次，數字大於第一次結果的數字就交換
+     *          4. 負整數會有負號，所以拆分後的陣列需要避開負號的鍵位
+     *
+     * @test
+     * @group AsiaYoTest
+     */
+    public function assertNextPermutationGreaterNegativeNumeric()
+    {
+        $this->assertEquals("-3301", $this->nextGreaterNegativeNumeric("-3310"));
+    }
+
+    /**
      * Reorganize numeric and find next permutation greater numeric.
      *
      * @param string $numeric The numeric being reorganized.
@@ -129,6 +148,32 @@ class AsiaYoTest extends TestCase
         $numericSplitArray = $this->swapNumeric($numericSplitArray, $baseKey, $swapKey);
 
         $numericSplitArray = $this->reverseNumeric($numericSplitArray, $baseKey + 1);
+
+        return implode($numericSplitArray);
+    }
+
+    /**
+     * Reorganize numeric and find next permutation greater negative numeric.
+     *
+     * @param string $numeric The numeric being reorganized.
+     *
+     * @return string Next greater negative numeric.
+     */
+    private function nextGreaterNegativeNumeric(string $numeric): string
+    {
+        $numericSplitArray = str_split($numeric, 1);
+
+        $baseKey = count($numericSplitArray) - 2;
+        while ($baseKey > 1 && $numericSplitArray[$baseKey + 1] >= $numericSplitArray[$baseKey]) {
+            $baseKey--;
+        }
+
+        $swapKey = count($numericSplitArray) - 1;
+        while ($swapKey > $baseKey && $numericSplitArray[$swapKey] >= $numericSplitArray[$baseKey]) {
+            $swapKey--;
+        }
+
+        $numericSplitArray = $this->swapNumeric($numericSplitArray, $baseKey, $swapKey);
 
         return implode($numericSplitArray);
     }
