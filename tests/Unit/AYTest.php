@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 
-class AsiaYoTest extends TestCase
+class AYTest extends TestCase
 {
     public function setUp()
     {
@@ -18,7 +18,7 @@ class AsiaYoTest extends TestCase
      * f(9527) => “9,527”
      *
      * @test
-     * @group AsiaYoTest
+     * @group AYTest
      */
     public function assertThousandNumeric()
     {
@@ -32,7 +32,7 @@ class AsiaYoTest extends TestCase
      * f(3345678) => “3,345,678”
      *
      * @test
-     * @group AsiaYoTest
+     * @group AYTest
      */
     public function assertMillionsNumeric()
     {
@@ -46,7 +46,7 @@ class AsiaYoTest extends TestCase
      * f(-123.45) => “-123.45”。
      *
      * @test
-     * @group AsiaYoTest
+     * @group AYTest
      */
     public function assertNegativeAndFloatNumeric()
     {
@@ -81,7 +81,7 @@ class AsiaYoTest extends TestCase
      * pipe(5, increment) => 6
      *
      * @test
-     * @group AsiaYoTest
+     * @group AYTest
      */
     public function assertCallFunctionOnce()
     {
@@ -99,7 +99,7 @@ class AsiaYoTest extends TestCase
      * pipe(5, increment, increment, increment) => 8
      *
      * @test
-     * @group AsiaYoTest
+     * @group AYTest
      */
     public function assertCallFunctionSeveralTimes()
     {
@@ -145,7 +145,7 @@ class AsiaYoTest extends TestCase
      *          2. 再從右邊比對一次，將數字大於第一次比對出來的數字做交換
      *
      * @test
-     * @group AsiaYoTest
+     * @group AYTest
      */
     public function assertNextPermutationGreaterNumeric()
     {
@@ -163,7 +163,7 @@ class AsiaYoTest extends TestCase
      *          3. 將 $baseKey 往右開始的降冪數列，反轉一次即可為升冪排列的數列
      *
      * @test
-     * @group AsiaYoTest
+     * @group AYTest
      */
     public function assertNextPermutationGreaterNumericHasSameNumber()
     {
@@ -182,7 +182,7 @@ class AsiaYoTest extends TestCase
      *          4. 負整數會有負號，所以拆分後的陣列需要避開負號的鍵位
      *
      * @test
-     * @group AsiaYoTest
+     * @group AYTest
      */
     public function assertNextPermutationGreaterNegativeNumeric()
     {
