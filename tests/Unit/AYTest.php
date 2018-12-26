@@ -186,7 +186,7 @@ class AYTest extends TestCase
      */
     public function assertNextPermutationGreaterNegativeNumeric()
     {
-        $this->assertEquals("-3301", $this->nextGreaterNegativeNumeric("-3310"));
+        $this->assertEquals("-3301", $this->nextGreaterNumeric("-3310"));
     }
 
     /**
@@ -201,44 +201,29 @@ class AYTest extends TestCase
         $numericSplitArray = str_split($numeric, 1);
 
         $baseKey = count($numericSplitArray) - 2;
-        while ($baseKey >= 0 && $numericSplitArray[$baseKey + 1] <= $numericSplitArray[$baseKey]) {
-            $baseKey--;
-        }
-
         $swapKey = count($numericSplitArray) - 1;
-        while ($swapKey > $baseKey && $numericSplitArray[$swapKey] <= $numericSplitArray[$baseKey]) {
-            $swapKey--;
+
+        if ($numeric > 0) {
+            while ($baseKey >= 0 && $numericSplitArray[$baseKey + 1] <= $numericSplitArray[$baseKey]) {
+                $baseKey--;
+            }
+
+            while ($swapKey > $baseKey && $numericSplitArray[$swapKey] <= $numericSplitArray[$baseKey]) {
+                $swapKey--;
+            }
+        } else {
+            while ($baseKey > 1 && $numericSplitArray[$baseKey + 1] >= $numericSplitArray[$baseKey]) {
+                $baseKey--;
+            }
+
+            while ($swapKey > $baseKey && $numericSplitArray[$swapKey] >= $numericSplitArray[$baseKey]) {
+                $swapKey--;
+            }
         }
 
         $numericSplitArray = $this->swapNumeric($numericSplitArray, $baseKey, $swapKey);
 
         $numericSplitArray = $this->reverseNumeric($numericSplitArray, $baseKey + 1);
-
-        return implode($numericSplitArray);
-    }
-
-    /**
-     * Reorganize numeric and find next permutation greater negative numeric.
-     *
-     * @param string $numeric The numeric being reorganized.
-     *
-     * @return string Next greater negative numeric.
-     */
-    private function nextGreaterNegativeNumeric(string $numeric): string
-    {
-        $numericSplitArray = str_split($numeric, 1);
-
-        $baseKey = count($numericSplitArray) - 2;
-        while ($baseKey > 1 && $numericSplitArray[$baseKey + 1] >= $numericSplitArray[$baseKey]) {
-            $baseKey--;
-        }
-
-        $swapKey = count($numericSplitArray) - 1;
-        while ($swapKey > $baseKey && $numericSplitArray[$swapKey] >= $numericSplitArray[$baseKey]) {
-            $swapKey--;
-        }
-
-        $numericSplitArray = $this->swapNumeric($numericSplitArray, $baseKey, $swapKey);
 
         return implode($numericSplitArray);
     }
